@@ -59,6 +59,9 @@ def findposition(round,string):
     lower = middle-7
     upper = middle+7
     for j in range(lower,upper+1,1):
+        print(arr[j][0])
+        if arr[j][0] == "Kenyan Drake":
+            bob = 5
         if arr[j][0]==string:
             return arr[j][3][:2].upper()
     return "AB"
@@ -134,7 +137,7 @@ draftdict = create_dict()
 
 #drafting
 alreadytightend = False
-weights = create_weights(2,5,8)
+probability_density = create_weights(2,5,8)
 for i in range(12):
     round = i+1
     #QB
@@ -145,15 +148,15 @@ for i in range(12):
                 break
     else:
         #pick random guy
-        pick = random.choice(pickplayerarr[i])
+        pick = random.choices(pickplayerarr[i],weights=probability_density,k=1)[0]
         position = findposition(round,pick)
         while(position=="QB"):
-            pick = random.choice(pickplayerarr[i])
+            pick = random.choices(pickplayerarr[i],weights=probability_density,k=1)[0]
             position = findposition(round, pick)
         #Tight End
         if alreadytightend:
             while(position=="TE" or position=="QB"):
-                pick = random.choice(pickplayerarr[i])
+                pick = random.choices(pickplayerarr[i],weights=probability_density,k=1)[0]
                 position = findposition(round, pick)
         else:
             if position=="TE":
